@@ -3,5 +3,5 @@ go 1.19
 use (
     ./concurrency 
     ./design_patterns
-    ./restws
+    ./go-rest-api
 )
