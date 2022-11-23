@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type House struct {
 	window string
 	door   string
@@ -21,14 +23,26 @@ type YBuilder struct {
 	House
 }
 
-func (x *XBuilder) setWindow() string {
-	return "xWindow"
+func (h *House) String() {
+	fmt.Printf("window=%s, door=%s, floor=%s\n", h.window, h.door, h.floor)
 }
-func (x *XBuilder) setDoor() string {
-	return "xDoor"
+
+func NewXBuilder() *XBuilder {
+	return &XBuilder{}
 }
-func (x *XBuilder) setFloor() string {
-	return "xFloor"
+
+func NewYBuilder() *YBuilder {
+	return &YBuilder{}
+}
+
+func (x *XBuilder) setWindow() {
+	x.window = "xWindow"
+}
+func (x *XBuilder) setDoor() {
+	x.door = "xDoor"
+}
+func (x *XBuilder) setFloor() {
+	x.floor = "xFloor"
 }
 func (x *XBuilder) getHouse() House {
 	return House{
@@ -38,14 +52,14 @@ func (x *XBuilder) getHouse() House {
 	}
 }
 
-func (y *YBuilder) setWindow() string {
-	return "xWindow"
+func (y *YBuilder) setWindow() {
+	y.window = "yWindow"
 }
-func (y *YBuilder) setDoor() string {
-	return "xDoor"
+func (y *YBuilder) setDoor() {
+	y.door = "yDoor"
 }
-func (y *YBuilder) setFloor() string {
-	return "xFloor"
+func (y *YBuilder) setFloor() {
+	y.floor = "yFloor"
 }
 func (y *YBuilder) getHouse() House {
 	return House{
@@ -58,10 +72,30 @@ func (y *YBuilder) getHouse() House {
 func GetBuilder(builder string) IBuilder {
 	switch builder {
 	case "X":
-		return &XBuilder{}
+		return NewXBuilder()
 	case "Y":
-		return &YBuilder{}
+		return NewYBuilder()
 	default:
 		return nil
 	}
 }
+
+type Director struct {
+	builder IBuilder
+}
+
+func NewDirector(builder IBuilder) *Director {
+	return &Director{builder}
+}
+
+func (d *Director) SetDirector(builder IBuilder) {
+	d.builder = builder
+}
+
+func (d *Director) BuildHouse() House {
+	d.builder.setDoor()
+	d.builder.setFloor()
+	d.builder.setWindow()
+	return d.builder.getHouse()
+}
+

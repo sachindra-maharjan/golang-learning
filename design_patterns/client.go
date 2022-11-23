@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //Singleton
 /*func main() {
 	wg := &sync.WaitGroup{}
@@ -21,5 +23,16 @@ package main
 
 // Builder
 func main() {
+	x := GetBuilder("X")
+	y := GetBuilder("Y")
+
+	d := NewDirector(x)
+	var house = d.BuildHouse()
+
+	fmt.Printf("X Builder has built %+v \n", house)
+
+	d = NewDirector(y)
+	house = d.BuildHouse()
+	fmt.Printf("Y Builder has built %+v \n", house)
 
 }
