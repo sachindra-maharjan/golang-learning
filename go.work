@@ -4,4 +4,6 @@ use (
     ./concurrency 
     ./design_patterns
     ./go-rest-api
+    ./datatypes
+    ./golang-advanced-branching
 )
