@@ -6,4 +6,5 @@ use (
     ./go-rest-api
     ./datatypes
     ./golang-advanced-branching
+    ./lrucache
 )

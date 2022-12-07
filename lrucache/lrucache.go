@@ -1,4 +1,4 @@
-package main
+package lrucache
 
 import (
 	"fmt"
@@ -82,6 +82,10 @@ func (l *LRUCache) Get(value int) (int, error) {
 	return entry.key, nil
 }
 
+func (l *LRUCache) CurrentCapacity() int {
+	return currentCapacity
+}
+
 func (l *LRUCache) Print() {
 	curr := head
 	for curr != nil {
@@ -89,15 +93,4 @@ func (l *LRUCache) Print() {
 		curr = curr.next
 	}
 	fmt.Println()
-}
-
-func main() {
-	lrucache := NewLRUCache(5)
-	lrucache.Add(1)
-	lrucache.Add(2)
-	lrucache.Add(3)
-	lrucache.Add(4)
-	lrucache.Add(5)
-	lrucache.Get(2)
-	lrucache.Print()
 }
