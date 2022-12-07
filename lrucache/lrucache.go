@@ -21,7 +21,7 @@ var head *Node
 var tail *Node
 
 func NewLRUCache(capacity int) *LRUCache {
-	head = &Node{key: -2, value: -2}
+	head = &Node{key: -1, value: -1}
 	tail = &Node{key: -1, value: -1}
 	head.next = tail
 	tail.prev = head
@@ -37,15 +37,14 @@ func (l *LRUCache) Add(newValue int) {
 	} else {
 		// remove tail when maximum capacity exceeds
 		if currentCapacity >= l.capacity {
-			fmt.Println("capacity exceeded. removing old cache value")
 			temp := tail.prev
-			temp.prev.next = temp.next
-			temp.next.prev = temp.prev
+			temp.prev.next = tail
+			tail.prev = temp.prev
 			temp.next = nil
 			temp.prev = nil
-
 			currentCapacity--
 			delete(cache, temp.value)
+			
 		}
 
 		newNode := &Node{
@@ -53,7 +52,10 @@ func (l *LRUCache) Add(newValue int) {
 			value: newValue,
 		}
 
-		head.next.prev = newNode
+		if head.next != nil {
+			head.next.prev = newNode
+		}
+		
 		newNode.next = head.next
 		head.next = newNode
 		newNode.prev = head
@@ -71,9 +73,13 @@ func (l *LRUCache) Get(value int) (int, error) {
 	}
 
 	// move node to the beginning
-	entry.prev.next = entry.next
-	entry.next.prev = entry.prev
-
+	if entry.prev != nil {
+		entry.prev.next = entry.next
+	}
+	if entry.next != nil {
+		entry.next.prev = entry.prev
+	}
+	
 	entry.next = head.next
 	head.next.prev = entry
 	head.next = entry

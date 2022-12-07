@@ -35,9 +35,10 @@ func TestMostRecent(t *testing.T) {
 	lrucache.Get(1)
 	lrucache.Add(4)
 	lrucache.Add(5)
-	val, err := lrucache.Get(1)
+	lrucache.Print()
+	got, err := lrucache.Get(1)
 	if err != nil {
 		t.Errorf("failed: %v", err)
 	}
-	require.Equal(t, 1, val, "Most recent cache should not be evicted")
+	require.Equal(t, 1, got, "Most recent cache should not be evicted")
 }
